@@ -11,7 +11,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class HelloWorldIT {
+public class UploadIT {
     private static String endpointUrl;
 
     @BeforeClass
