@@ -1,11 +1,13 @@
 package br.com.ismael.beans;
 
+import br.com.ismael.utils.Status;
+
 public class ResponseListagemArquivos {
 
 	private String usuario;
 	private String nomeArquivo;
-	private String statusUpload;
-	private long tempoEnvio;
+	private Status statusUpload;
+	private Double tempoEnvio;
 	private int blocosArquivo;
 	private String link;
 
@@ -25,22 +27,6 @@ public class ResponseListagemArquivos {
 		this.nomeArquivo = nomeArquivo;
 	}
 
-	public String getStatusUpload() {
-		return statusUpload;
-	}
-
-	public void setStatusUpload(String statusUpload) {
-		this.statusUpload = statusUpload;
-	}
-
-	public long getTempoEnvio() {
-		return tempoEnvio;
-	}
-
-	public void setTempoEnvio(long tempoEnvio) {
-		this.tempoEnvio = tempoEnvio;
-	}
-
 	public int getBlocosArquivo() {
 		return blocosArquivo;
 	}
@@ -55,6 +41,22 @@ public class ResponseListagemArquivos {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Double getTempoEnvio() {
+		return tempoEnvio;
+	}
+
+	public void setTempoEnvio(Double tempoEnvio) {
+		this.tempoEnvio = tempoEnvio;
+	}
+
+	public Status getStatusUpload() {
+		return statusUpload;
+	}
+
+	public void setStatusUpload(Status statusUpload) {
+		this.statusUpload = statusUpload;
 	}
 
 }

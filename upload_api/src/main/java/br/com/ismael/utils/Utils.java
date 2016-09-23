@@ -1,4 +1,4 @@
-package br.com.ismael;
+package br.com.ismael.utils;
 
 import java.io.File;
 import java.util.Arrays;

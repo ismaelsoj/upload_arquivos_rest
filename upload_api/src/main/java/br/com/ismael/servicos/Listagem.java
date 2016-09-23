@@ -24,17 +24,19 @@ public class Listagem {
 
 	@Context
 	UriInfo uri;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFiles() {
 		List<ResponseListagemArquivos> listaRetorno = new LinkedList<>();
-		for (BeanArquivo beanArquivo : ListaArquivosUpload.lista) {
+		for (BeanArquivo beanArquivo : ListaArquivosUpload.getInstance().getLista()) {
 			ResponseListagemArquivos response = new ResponseListagemArquivos();
 			response.setUsuario(beanArquivo.getIdentificadorUsuario());
 			response.setNomeArquivo(beanArquivo.getArquivo().getName());
 			URI baseURI = UriBuilder.fromUri(uri.getBaseUri()).build();
-			response.setLink(baseURI.toString() + "/download/"+response.getNomeArquivo());
+			response.setLink(baseURI.toString() + "/download/" + response.getNomeArquivo());
+			response.setTempoEnvio(beanArquivo.getTempoUpload());
+			response.setStatusUpload(beanArquivo.getStatus());
 			listaRetorno.add(response);
 		}
 		return Response.ok(new Gson().toJson(listaRetorno).toString()).build();

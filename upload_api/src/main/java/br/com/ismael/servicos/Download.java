@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import br.com.ismael.Utils;
+import br.com.ismael.utils.Utils;
 
 public class Download {
 

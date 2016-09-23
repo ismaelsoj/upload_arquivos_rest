@@ -13,6 +13,7 @@
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+            <bean class="br.com.ismael.filtros.UploadFilter"/>
         </jaxrs:providers>
     </jaxrs:server>
 </beans>
