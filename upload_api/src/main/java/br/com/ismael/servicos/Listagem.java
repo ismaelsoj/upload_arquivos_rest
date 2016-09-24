@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import br.com.ismael.beans.BeanArquivo;
 import br.com.ismael.beans.ResponseListagemArquivos;
 import br.com.ismael.lista.ListaArquivosUpload;
+import br.com.ismael.utils.Status;
 
 @Path("/arquivos")
 public class Listagem {
@@ -32,11 +33,13 @@ public class Listagem {
 		for (BeanArquivo beanArquivo : ListaArquivosUpload.getInstance().getLista()) {
 			ResponseListagemArquivos response = new ResponseListagemArquivos();
 			response.setUsuario(beanArquivo.getIdentificadorUsuario());
-			response.setNomeArquivo(beanArquivo.getArquivo().getName());
-			URI baseURI = UriBuilder.fromUri(uri.getBaseUri()).build();
-			response.setLink(baseURI.toString() + "/download/" + response.getNomeArquivo());
-			response.setTempoEnvio(beanArquivo.getTempoUpload());
+			response.setNomeArquivo(beanArquivo.getArquivo());
 			response.setStatusUpload(beanArquivo.getStatus());
+			if (response.getStatusUpload().equals(Status.CONCLUIDO)) {
+				URI baseURI = UriBuilder.fromUri(uri.getBaseUri()).build();
+				response.setLink(baseURI.toString() + "/download/" + response.getNomeArquivo());
+				response.setTempoEnvio(beanArquivo.getTempoUpload());
+			}
 			listaRetorno.add(response);
 		}
 		return Response.ok(new Gson().toJson(listaRetorno).toString()).build();

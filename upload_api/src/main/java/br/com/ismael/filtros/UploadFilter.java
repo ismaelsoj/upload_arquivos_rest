@@ -7,16 +7,23 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 
+import br.com.ismael.beans.BeanArquivo;
+import br.com.ismael.lista.ListaArquivosUpload;
 import br.com.ismael.utils.Status;
 
 @PreMatching
-public class UploadFilter implements ContainerRequestFilter{
+public class UploadFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		requestContext.setProperty("dataInicio", new Date());
-		//TODO - Criar o objeto beanArquivo nesse ponto para rastrear o andamento do upload
-		requestContext.setProperty("statusEnvio", Status.EM_ANDAMENTO);
+		if (requestContext.getUriInfo().getPath().equals("upload")
+				&& requestContext.getRequest().getMethod().equals("POST")) {
+			requestContext.setProperty("dataInicio", new Date());
+			BeanArquivo beanArquivo = new BeanArquivo();
+			beanArquivo.setStatus(Status.EM_ANDAMENTO);
+			ListaArquivosUpload.getInstance().getLista().add(beanArquivo);
+			requestContext.setProperty("beanArquivo", beanArquivo);
+		}
 	}
 
 }

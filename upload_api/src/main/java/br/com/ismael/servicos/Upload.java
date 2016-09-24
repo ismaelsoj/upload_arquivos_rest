@@ -18,7 +18,6 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import br.com.ismael.beans.BeanArquivo;
 import br.com.ismael.constantes.Constantes;
-import br.com.ismael.lista.ListaArquivosUpload;
 import br.com.ismael.utils.Utils;
 
 @Path("/upload")
@@ -28,38 +27,34 @@ public class Upload {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response upload(@Context HttpServletRequest request, MultipartBody body) {
 		Date dataInicio = (Date) request.getAttribute("dataInicio");
+		BeanArquivo beanArquivo = (BeanArquivo) request.getAttribute("beanArquivo");
 		StringBuilder retorno = new StringBuilder();
 		Response response = null;
 		try {
-			for (Attachment attachment : body.getAllAttachments()) {
-				System.out.println(attachment.getHeader("dataInicio"));
-				File diretorioDestino = Constantes.DIRETORIO_ARQUIVOS;
-				diretorioDestino.mkdir();
-				String filename = attachment.getContentDisposition().getFilename();
-				File destino = new File(diretorioDestino.getName() + File.separator + filename);
-				if (Utils.getArquivoDiretorioUpload(filename) == null) {
-					if (!destino.exists()) {
-						destino.createNewFile();
-					}
-					BeanArquivo beanArquivo = new BeanArquivo();
-					beanArquivo.setIdentificadorUsuario(attachment.getContentDisposition().getParameter("name"));
-					beanArquivo.setArquivo(destino);
-					try {
-						attachment.transferTo(destino);
-						retorno.append("Arquivo " + filename + " enviado com sucesso.");
-						Date dataFim = new Date();
-						beanArquivo.setTempoUpload(
-								new Long(dataFim.getTime() - dataInicio.getTime()).doubleValue() / 1000);
-						beanArquivo.setStatus(br.com.ismael.utils.Status.CONCLUIDO);
-					} catch (IOException e) {
-						retorno.append("Erro ao enviar o arquivo " + filename);
-					}
-					System.out.println(filename);
-					ListaArquivosUpload.getInstance().getLista().add(beanArquivo);
-					response = Response.ok(retorno.toString()).build();
-				} else {
-					response = Response.status(Status.CONFLICT).build();
+			Attachment attachment = body.getRootAttachment();
+			File diretorioDestino = Constantes.DIRETORIO_ARQUIVOS;
+			diretorioDestino.mkdir();
+			String filename = attachment.getContentDisposition().getFilename();
+			File destino = new File(diretorioDestino.getName() + File.separator + filename);
+			beanArquivo.setIdentificadorUsuario(attachment.getContentDisposition().getParameter("name"));
+			beanArquivo.setArquivo(destino.getName());
+			if (Utils.getArquivoDiretorioUpload(filename) != null) {
+				beanArquivo.setStatus(br.com.ismael.utils.Status.FALHOU);
+				response = Response.status(Status.CONFLICT).entity("Arquivo já existente no servidor.").build();
+			} else {
+				if (!destino.exists()) {
+					destino.createNewFile();
 				}
+				try {
+					attachment.transferTo(destino);
+					retorno.append("Arquivo " + filename + " enviado com sucesso.");
+					Date dataFim = new Date();
+					beanArquivo.setTempoUpload(new Long(dataFim.getTime() - dataInicio.getTime()).doubleValue() / 1000);
+					beanArquivo.setStatus(br.com.ismael.utils.Status.CONCLUIDO);
+				} catch (IOException e) {
+					retorno.append("Erro ao enviar o arquivo " + filename);
+				}
+				response = Response.ok(retorno.toString()).build();
 			}
 			return response;
 		} catch (Exception ex) {
