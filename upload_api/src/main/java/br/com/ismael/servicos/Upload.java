@@ -40,7 +40,7 @@ public class Upload {
 			beanArquivo.setArquivo(destino.getName());
 			if (Utils.getArquivoDiretorioUpload(filename) != null) {
 				beanArquivo.setStatus(br.com.ismael.utils.Status.FALHOU);
-				response = Response.status(Status.CONFLICT).entity("Arquivo j· existente no servidor.").build();
+				response = Response.status(Status.CONFLICT).entity("Arquivo j√° existente no servidor.").build();
 			} else {
 				if (!destino.exists()) {
 					destino.createNewFile();
