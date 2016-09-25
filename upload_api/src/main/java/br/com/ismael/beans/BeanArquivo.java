@@ -8,6 +8,7 @@ public class BeanArquivo {
 	private String arquivo;
 	private double tempoUpload;
 	private Status status;
+	private String link;
 
 	public String getIdentificadorUsuario() {
 		return identificadorUsuario;
@@ -39,6 +40,14 @@ public class BeanArquivo {
 
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }
