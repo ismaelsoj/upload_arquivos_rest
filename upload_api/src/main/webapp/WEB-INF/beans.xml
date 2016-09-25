@@ -11,6 +11,11 @@
 	<bean
 		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
 	<jaxrs:server id="services" address="/">
+		<jaxrs:properties>
+			<entry key="attachment-directory" value="tmp/upload" />
+			<!-- 1MB -->
+			<entry key="attachment-memory-threshold" value="1048576" />
+		</jaxrs:properties>
 		<jaxrs:serviceBeans>
 			<bean class="br.com.ismael.servicos.Upload" />
 			<bean class="br.com.ismael.servicos.Listagem" />
