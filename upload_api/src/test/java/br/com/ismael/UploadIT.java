@@ -21,7 +21,7 @@ public class UploadIT {
 
     @Test
     public void testPing() throws Exception {
-        String textoTeste = "Este é um exemplo GET";
+        String textoTeste = "Este ï¿½ um exemplo GET";
 		WebClient client = WebClient.create(endpointUrl + "/hello/echo/" + textoTeste);
         Response r = client.accept("text/plain").get();
         assertEquals(Response.Status.OK.getStatusCode(), r.getStatus());
