@@ -1,0 +1,18 @@
+<!doctype html>
+<html >
+<head>
+<script src="angular/angular.min.js"></script>
+<script src="angular/controller/uploadController.js"></script>
+</head>
+<body>
+	<div ng-app="upload" ng-controller="uploadControler">
+		<label><b>Informe um nome de usuário:</b> <input type="text"
+			ng-model="usuario" placeholder="Entre com um nome de usuario"></label>
+		<p />
+		<label><b>Escolha um arquivo para ser enviado para o
+				servidor: </b><input type="file" ng-model="arquivo" file-model="arquivo" /></label>
+		<p />
+		<button ng-click="upload()">Enviar</button>
+	</div>
+</body>
+</html>
