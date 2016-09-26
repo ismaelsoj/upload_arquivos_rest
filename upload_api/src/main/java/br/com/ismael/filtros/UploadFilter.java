@@ -27,7 +27,7 @@ public class UploadFilter implements ContainerRequestFilter {
         /*
          * Irá filtrar apenas as requisições de upload.
          */
-        if (requestContext.getUriInfo().getPath().equals("upload")
+        if (requestContext.getUriInfo().getPath().equals("upload/")
                         && requestContext.getRequest().getMethod().equals("POST")) {
             /*
              * O arquivo deve ser enviado em blocos (chunks) de no máximo 1MB --> As configurações para os blocos de

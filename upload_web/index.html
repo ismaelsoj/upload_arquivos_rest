@@ -1,11 +1,8 @@
 <!doctype html>
-<html >
-<head>
-<script src="angular/angular.min.js"></script>
-<script src="angular/controller/uploadController.js"></script>
-</head>
-<body>
-	<div ng-app="upload" ng-controller="uploadControler">
+<html ng-app="upload">
+
+<body ng-controller="uploadControler">
+	<div>
 		<label><b>Informe um nome de usuário:</b> <input type="text"
 			ng-model="usuario" placeholder="Entre com um nome de usuario"></label>
 		<p />
@@ -14,5 +11,27 @@
 		<p />
 		<button ng-click="upload()">Enviar</button>
 	</div>
+	<label><b>Relatório de Upload</b></label>
+	<div>
+	    <table border=1>
+			<tr>
+				<td><b><center>Usuario</center></b></td>
+				<td><b><center>Arquivo</center></b></td>
+				<td><b><center>Tempo de Upload</center></b></td>
+				<td><b><center>Status</center></b></td>
+				<td><b><center>Link</center></b></td>
+			</tr>
+			<tr ng-repeat="arquivo in arquivos">
+				<td>{{arquivo.identificadorUsuario}}</td>
+				<td>{{arquivo.arquivo}}</td>
+				<td>{{arquivo.tempoUpload}}</td>
+				<td>{{arquivo.status}}</td>
+				<td><a href='{{arquivo.link}}'>{{arquivo.link}}</a></td>
+			</tr>
+		</table>
+	</div>
+	<script src="angular/angular.min.js"></script>
+    <script src="angular/controller/app.js"></script>
+	<script src="angular/controller/uploadController.js"></script>
 </body>
 </html>

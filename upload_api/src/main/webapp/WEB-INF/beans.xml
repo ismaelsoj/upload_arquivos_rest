@@ -26,8 +26,9 @@
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-			<!-- Adiciona o filtro como Provider -->
+			<!-- Adiciona o filtro de upload como Provider -->
 			<bean class="br.com.ismael.filtros.UploadFilter" />
+			<bean class="br.com.ismael.filtros.CORSFilter" />
 		</jaxrs:providers>
 		<!-- SWAGGER - Configurando ambiente Swagger -->
 		<jaxrs:features>
