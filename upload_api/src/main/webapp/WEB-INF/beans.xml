@@ -11,11 +11,14 @@
 	<bean
 		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer" />
 	<jaxrs:server id="services" address="/">
+		<!-- Define o tamanho maximo de cada bloco e o diretorio temporario para 
+			receber esses blocos -->
 		<jaxrs:properties>
 			<entry key="attachment-directory" value="tmp/upload" />
 			<!-- 1MB -->
 			<entry key="attachment-memory-threshold" value="1048576" />
 		</jaxrs:properties>
+		<!-- Define os serviços disponiveis -->
 		<jaxrs:serviceBeans>
 			<bean class="br.com.ismael.servicos.Upload" />
 			<bean class="br.com.ismael.servicos.Listagem" />
@@ -23,8 +26,10 @@
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+			<!-- Adiciona o filtro como Provider -->
 			<bean class="br.com.ismael.filtros.UploadFilter" />
 		</jaxrs:providers>
+		<!-- SWAGGER - Configurando ambiente Swagger -->
 		<jaxrs:features>
 			<!-- CXF Swagger2Feature -->
 			<bean class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
